@@ -24,6 +24,7 @@ out/
 # --- Служебные файлы IDE ---
 .vs/
 .vscode/
+.vsconfig
 .idea/
 *.user
 # --- CMake ---
