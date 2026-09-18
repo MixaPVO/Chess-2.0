@@ -2,13 +2,25 @@
 #define GAME_MANAGEMENT_H
 
 #include <iostream>
-class GameManagement
+#include <thread>
+
+#include "IUpdatable.h"
+#include "Chessboard.h"
+
+class GameManagement : public IUpdatable
 {
+private:
+    bool _isGameRunning = true;
+
+    //DEBUG
+    Chessboard* _chessboard;
 public:
     GameManagement();
     ~GameManagement();
+    
+	void Update() override;
 private:
-    void Update();
+    void ClearConsole();
 };
 
 #endif
