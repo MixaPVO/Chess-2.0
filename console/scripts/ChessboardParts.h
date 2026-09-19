@@ -1,4 +1,5 @@
-#include <wchar.h>
+#ifndef CHESSBOARDPARTS_H
+#define CHESSBOARDPARTS_H
 
 namespace ChessboardParts
 {
@@ -9,3 +10,5 @@ namespace ChessboardParts
 	inline constexpr wchar_t BOTTOM_LEFT_CORNER = L'\u255A';
 	inline constexpr wchar_t BOTTOM_RIGHT_CORNER = L'\u255D';
 }
+
+#endif
