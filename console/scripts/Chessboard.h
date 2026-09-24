@@ -1,5 +1,4 @@
-#ifndef CHESSBOARD_H
-#define CHESSBOARD_H
+#pragma once
 
 #include <vector>
 #include <iostream>
@@ -15,13 +14,11 @@ class Chessboard : public IUpdatable
 public:
 	bool isActive;
 private:
-	std::vector<std::vector<wchar_t>> _chessboard;
-	std::vector<Cell*> _cells;
+	std::vector<std::unique_ptr<Cell>> _cells;
 	int _fieldSize;
 
 public:
 	Chessboard(int fieldSize, bool isActive = true);
-	~Chessboard();
 
 	void Update() override;
 
@@ -29,5 +26,3 @@ private:
 	void BuildChessboard(int fieldSize);
 	void PrintChessboard();
 };
-
-#endif

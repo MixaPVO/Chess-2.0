@@ -1,5 +1,4 @@
-#ifndef GAME_MANAGEMENT_H
-#define GAME_MANAGEMENT_H
+#pragma once
 
 #include <iostream>
 #include <thread>
@@ -25,5 +24,3 @@ private:
     void ClearConsole();
     void PickUpInput();
 };
-
-#endif

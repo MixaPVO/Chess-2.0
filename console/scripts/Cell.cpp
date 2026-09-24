@@ -1,39 +1,62 @@
 #include "Cell.h"
-#include "CellboardParts.h"
 
-Cell::Cell(int positionX, int positionY, bool isFigureOnCell) : _positionX{positionX}, _positionY{positionY}
+Cell::Cell(int positionX, int positionY, bool isFigureOnCell) : _positionX{positionX}, _positionY{positionY}, isFigureOnCell{isFigureOnCell}
 {
     BuildCell();
 }
 
 void Cell::BuildCell()
 {
-    _cell.resize(3, std::vector<wchar_t>(3, L' '));
+    _cell.resize(Cell::height, std::vector<wchar_t>(Cell::width, L' '));
 }
 
-void Cell::DrawCell(int index)
+void Cell::DrawCell(int line)
 {
-    int width = Cell::_width - 2;
-    index %= width;
-    if (index == 0) {
+    if (line == 0)
+    {
         std::wcout << CellboardParts::TOP_LEFT_CORNER;
-        for (int i = 0; i < width; ++i) {
-            std::wcout << CellboardParts::HORIZONTAL_BORDER;
-        }   
-	    std::wcout << CellboardParts::TOP_RIGHT_CORNER << ' ';
+        std::wcout << std::wstring(Cell::width - 2, CellboardParts::HORIZONTAL_BORDER);
+        std::wcout << CellboardParts::TOP_RIGHT_CORNER << L' ';
     }
-    else if (0 < index && index < width - 1) {
-        std::wcout << CellboardParts::VERTICAL_BORDER;
-        for (int i = 0; i < width; ++i) {
-            std::wcout << std::wstring(1, 'P');
-        }
-        std::wcout << CellboardParts::VERTICAL_BORDER  << ' ';
-    }
-    else if (index == width - 1) {
+    
+    else if (line == Cell::height - 1)
+    {
         std::wcout << CellboardParts::BOTTOM_LEFT_CORNER;
-        for (int i = 0; i < width; ++i) {
-            std::wcout << CellboardParts::HORIZONTAL_BORDER;
-        }
-        std::wcout << CellboardParts::BOTTOM_RIGHT_CORNER  << ' ';
+        std::wcout << std::wstring(Cell::width - 2, CellboardParts::HORIZONTAL_BORDER);
+        std::wcout << CellboardParts::BOTTOM_RIGHT_CORNER << L' ';
     }
+    else
+    {
+        std::wcout << CellboardParts::VERTICAL_BORDER;
+
+        if (this->isFigureOnCell) 
+        {
+            ColorChanger::SetConsoleColor(this->_figure->getColor(), ColorsBackground::GRAY);
+
+            std::wcout << L' ' << this->_figure->getType() << L' ';
+            
+            ColorChanger::SetConsoleColor(ColorsText::WHITE, ColorsBackground::GRAY);
+        }
+        else
+            std::wcout << L' ' << L' ' << L' ';
+
+        std::wcout << CellboardParts::VERTICAL_BORDER << L' ';
+    }
+}
+
+void Cell::SetFigureOnCell(
+    PieceType type,
+    Fraction frac
+) 
+{
+    switch (type) {
+        case PieceType::PAWN:
+            _figure = std::make_unique<Pawn>(frac);
+            break;
+        case PieceType::ROOK:
+            _figure = std::make_unique<Rook>(frac);
+            break;
+    }
+
+    this->isFigureOnCell = true;
 }

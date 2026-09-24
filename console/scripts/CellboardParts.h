@@ -1,5 +1,4 @@
-#ifndef CELLBOARDPARTS_H
-#define CELLBOARDPARTS_H
+#pragma once
 
 namespace CellboardParts
 {
@@ -10,5 +9,3 @@ namespace CellboardParts
     inline constexpr wchar_t BOTTOM_LEFT_CORNER = L'\u2514';
     inline constexpr wchar_t BOTTOM_RIGHT_CORNER = L'\u2518';
 }
-
-#endif
