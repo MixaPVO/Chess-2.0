@@ -18,6 +18,17 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="scripts\Chessboard.cpp" />
+    <ClCompile Include="scripts\ChessPiece.cpp" />
+    <ClCompile Include="scripts\GameManagement.cpp" />
+    <ClCompile Include="scripts\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="scripts\Chessboard.h" />
+    <ClInclude Include="scripts\ChessPiece.h" />
+    <ClInclude Include="scripts\GameManagement.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -138,13 +149,6 @@
       <EnableSegmentHeap>true</EnableSegmentHeap>
     </Manifest>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Classes\GameManagement.cpp" />
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Headers\GameManagement.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Classes\GameManagement.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="Classes">
       <UniqueIdentifier>{6b9363cb-71ca-4392-9dcf-098851125daa}</UniqueIdentifier>
     </Filter>
@@ -15,7 +9,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Headers\GameManagement.h">
+    <ClCompile Include="scripts\main.cpp" />
+    <ClCompile Include="scripts\Chessboard.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="scripts\ChessPiece.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="scripts\GameManagement.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="scripts\Chessboard.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="scripts\ChessPiece.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="scripts\GameManagement.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

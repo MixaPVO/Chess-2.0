@@ -1,9 +1,43 @@
 #include "GameManagement.h"
-GameManagement::GameManagement()
+
+GameManagement::GameManagement(int edgeLength, int maxChessPiecesValue)
 {
-    std::cout << "Test\n";
+    _chessboard = std::make_unique<Chessboard>(edgeLength, maxChessPiecesValue);
 }
+
 GameManagement::~GameManagement()
 {
-	 std::cout << "Test\n";
+	std::wcout << L"GameManagement was destroyed" << std::endl;
+}
+
+Chessboard& GameManagement::GetChessboard()
+{
+    return *_chessboard;
+}
+
+void GameManagement::Update()
+{
+	while (_isGameRunning)
+	{
+	   ClearConsole();
+	   _chessboard->Update();
+		std::this_thread::sleep_for(std::chrono::milliseconds(_FRAME_DELAY_MIL_SEC));
+
+        PickUpInput();
+	}
+    std::wcout << std::endl;
+}
+
+void GameManagement::ClearConsole()
+{
+	std::wcout << L"\033[3J\033[3;1H" << std::flush;
+}
+
+void GameManagement::PickUpInput()
+{
+	if (_kbhit())
+	{
+		if (_getch() == 27)
+			_isGameRunning = false;
+	}
 }
