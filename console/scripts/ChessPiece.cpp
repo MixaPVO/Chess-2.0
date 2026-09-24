@@ -3,11 +3,12 @@
 ChessPiece::ChessPiece(wchar_t wcharChessPiece, int chessPieceValue, bool isWhitePiece): 
 _wcharChessPiece{wcharChessPiece}, _chessPieceValue{chessPieceValue}, _isWhitePiece{isWhitePiece}
 {
+    std::wcout << "ChessPiece " << _wcharChessPiece << " was created, _isWhitePeace = " << _isWhitePiece << std::endl;
 }
 
 ChessPiece::~ChessPiece()
 {
-    std::wcout << "ChessPiece " << _wcharChessPiece << " was destroyed" << std::endl;
+    std::wcout << "ChessPiece " << _wcharChessPiece << " was destroyed, _isWhitePeace = " << _isWhitePiece << std::endl;
 }
 
 wchar_t ChessPiece::GetWcharChessPiece() 

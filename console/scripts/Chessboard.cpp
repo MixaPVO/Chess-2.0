@@ -3,6 +3,7 @@
 Chessboard::Chessboard(int edgeLength, int maxChessPiecesValue) : _edgeLength{edgeLength}, _maxChessPiecesValue{maxChessPiecesValue}
 {
     _wcharChessboard.resize(_edgeLength * _edgeLength, ' ');
+    std::wcout << L"Chessboard was created" << std::endl;
 }
 
 Chessboard::~Chessboard()
@@ -28,7 +29,7 @@ void Chessboard::AddChessPiece(ChessPiece* newChessPiece)
 
     if (curChessPiecesValue + chessPieceValue > _maxChessPiecesValue)
     {
-        std::wcout<< newChessPiece->GetWcharChessPiece() << " piece is superfluous" << std::endl;
+        std::wcout<< newChessPiece->GetWcharChessPiece() << " piece is superfluous, _isWhitePeace = " << isWhitePiece << std::endl;
         return;
     }
 
@@ -45,7 +46,7 @@ void Chessboard::AddChessPiece(ChessPiece* newChessPiece)
 
     if (pieceIndex < 0 || pieceIndex > _wcharChessboard.size() || _wcharChessboard[pieceIndex] != ' ')
     {
-        std::wcout << L"Too many pieces on the chessboard" << std::endl;
+        std::wcout<< newChessPiece->GetWcharChessPiece() << " piece is superfluous, _isWhitePeace = " << isWhitePiece << std::endl;
         return;
     }
 
@@ -58,13 +59,28 @@ void Chessboard::RemoveChessPiece(ChessPiece* removingChessPiece)
 {
     bool isWhitePiece = removingChessPiece->GetIsWhitePiece();
     std::vector<ChessPiece*>& curChessPieces = isWhitePiece ? _whiteChessPieces : _blackChessPieces;
-    // std::vector<ChessPiece*>::iterator necessaryPiece = std::find(curChessPieces.begin(), curChessPieces.end(), &removingChessPiece);
-    std::vector<ChessPiece*>::iterator newEnd = std::remove(curChessPieces.begin(), curChessPieces.end(), removingChessPiece);
-    if (newEnd == curChessPieces.end())
+    std::vector<ChessPiece*>::iterator necessaryPiece = std::find(curChessPieces.begin(), curChessPieces.end(), removingChessPiece);
+
+    if (necessaryPiece == curChessPieces.end())
     {
-        std::wcout << "That piece don't exist on the chessboard" << std::endl;
+        std::wcout << "That piece doesn't exist on the chessboard" << std::endl;
         return;
     }
+
+    int i = (*necessaryPiece)->GetIndexInChessboard();
+
+    if (isWhitePiece)
+    {
+        for (auto it = necessaryPiece; it < curChessPieces.end(); ++i, ++it)
+            _wcharChessboard[i] = _wcharChessboard[i + 1];
+    }
+    else
+        for (auto it = necessaryPiece; it < curChessPieces.end(); --i, ++it)
+            _wcharChessboard[i] = _wcharChessboard[i - 1];
+    _wcharChessboard[i] = ' ';
+    
+
+    std::vector<ChessPiece*>::iterator newEnd = std::remove(curChessPieces.begin(), curChessPieces.end(), removingChessPiece);
     curChessPieces.erase(newEnd, curChessPieces.end());
 }
 

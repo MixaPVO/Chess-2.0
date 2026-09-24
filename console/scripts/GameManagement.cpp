@@ -3,6 +3,7 @@
 GameManagement::GameManagement(int edgeLength, int maxChessPiecesValue)
 {
     _chessboard = std::make_unique<Chessboard>(edgeLength, maxChessPiecesValue);
+    std::wcout << L"GameManagement was created" << std::endl;
 }
 
 GameManagement::~GameManagement()
@@ -30,7 +31,7 @@ void GameManagement::Update()
 
 void GameManagement::ClearConsole()
 {
-	std::wcout << L"\033[3J\033[3;1H" << std::flush;
+	std::wcout << L"\033[2J\033[3J\033[1;1H" << std::flush;
 }
 
 void GameManagement::PickUpInput()

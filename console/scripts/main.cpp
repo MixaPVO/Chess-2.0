@@ -24,9 +24,10 @@ int main()
         for (std::size_t i = 0; i < 2; ++i)
             gameChessboard.AddChessPiece(*(bchpMany + i));
         gameChessboard.AddChessPiece(&bchpLast);
+        gameChessboard.RemoveChessPiece(*bchpMany);
 
         std::wcout<<L"-------TEST------"<<std::endl;
-        std::wcout << bchpMany[0]->GetChessPieceValue() << L" — value of the first black piece" << std::endl; 
+        std::wcout << gameChessboard.GetBlackChessPieces()[0]->GetChessPieceValue() << L" — value of the first black piece" << std::endl; 
 
         std::wcout << L"Info: press ESC to exit after running the chessboard" << std::endl;
             std::wcout<<"Press any key to continue" << std::endl;
