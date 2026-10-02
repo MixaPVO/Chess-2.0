@@ -4,7 +4,7 @@
 #include <iostream>
 #include <memory>
 
-#include "PieceType.h"
+#include "AllChessPieces.h"
 #include "BoardParts.h"
 #include "ConsoleColor.h"
 
