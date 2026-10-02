@@ -1,11 +1,13 @@
 #include "Chessboard.h"
 #include "ConsoleColor.h"
-#include "FigureType.h"
 #include "Cell.h"
 
-Chessboard::Chessboard(int fieldSize, bool isActive): _fieldSize{fieldSize}, isActive{isActive}
+Chessboard::Chessboard(int boardSize, bool isActive): _chessBoardSize{boardSize}, isActive{isActive}
 {
-	BuildChessboard(fieldSize);
+	BuildChessboard();
+
+	_totalWidth = _chessBoardSize * (Cell::WIDTH+1) + 1;
+	_totalHeight = _chessBoardSize * Cell::HEIGHT;
 }
 
 void Chessboard::Update()
@@ -16,82 +18,54 @@ void Chessboard::Update()
 	}
 }
 
-void Chessboard::BuildChessboard(int fieldSize)
+void Chessboard::BuildChessboard()
 {
-	// DEBUG
-	for (int i = 0; i < fieldSize; ++i)
+	_cells.resize(_chessBoardSize*_chessBoardSize);
+
+	for (int i = 0; i < _chessBoardSize; ++i)
 	{
-	    for (int j = 0; j < fieldSize; ++j)
+	    for (int j = 0; j < _chessBoardSize; ++j)
 	    {
-	        auto cell = std::make_unique<Cell>(i, j);
-
-	        if (i == 1)
-	        {
-	            cell->SetFigureOnCell(
-	                PieceType::PAWN,
-	                Fraction::WHITE
-	            );
-	        } 
-			else if (i == 0 && (j == 0 || j == 7))
-			{
-				cell->SetFigureOnCell(
-	                PieceType::ROOK,
-	                Fraction::WHITE
-	            );
-			}
-			else if (i == 6)
-			{
-				cell->SetFigureOnCell(
-	                PieceType::PAWN,
-	                Fraction::BLACK
-	            );
-			}
-			else if (i == 7 && (j == 0 || j == 7))
-			{
-				cell->SetFigureOnCell(
-	                PieceType::ROOK,
-	                Fraction::BLACK
-	            );
-			}
-
-	        _cells.push_back(std::move(cell));
+	        _cells[i*_chessBoardSize+j] = std::make_unique<Cell>();
 	    }
 	}
 }
 
-void Chessboard::PrintChessboard()
+void Chessboard::PrintChessboard() const
 {
-	int totalWidth = _fieldSize * (Cell::width+1) + 1;
-	int totalHeight = _fieldSize * Cell::height;
+	ColorChanger::SetTextColor(Color::WHITE);
+	ColorChanger::SetBGColor(Color::GRAY);
 
-	ColorChanger::SetConsoleColor(ColorsText::WHITE);
+	std::wcout << BP::ChessboardParts::TOP_LEFT_CORNER;
+	std::wcout << std::wstring(_totalWidth, BP::ChessboardParts::TOP_BORDER);
+	std::wcout << BP::ChessboardParts::TOP_RIGHT_CORNER << std::endl;
 
-	std::wcout << ChessboardParts::TOP_LEFT_CORNER;
-	std::wcout << std::wstring(totalWidth, ChessboardParts::HORIZONTAL_TOP_BORDER);
-	std::wcout << ChessboardParts::TOP_RIGHT_CORNER << std::endl;
-
-	for (std::size_t i = 0; i < totalHeight; ++i)
+	for (std::size_t cellRow = 0; cellRow < _chessBoardSize; ++cellRow)
 	{
-		std::wcout << ChessboardParts::VERTICAL_LEFT_BORDER;
-
-		ColorChanger::SetConsoleColor(ColorsText::WHITE, ColorsBackground::GRAY);
-		std::wcout << L' ';
-
-		std::size_t cellRow = i / Cell::height;
-		std::size_t cellLine = i % Cell::height;
-
-		for (std::size_t j = 0; j < _fieldSize; ++j)
-		{
-			std::size_t cellIndex = cellRow * _fieldSize + j;
-
-			_cells[cellIndex]->DrawCell(cellLine);
-		}
-		ColorChanger::SetConsoleColor(ColorsText::WHITE);
-
-		std::wcout << ChessboardParts::VERTICAL_RIGHT_BORDER << std::endl;
+	    for (std::size_t cellLine = 0; cellLine < Cell::HEIGHT; ++cellLine)
+	    {
+	        std::wcout << BP::ChessboardParts::LEFT_BORDER;
+	        std::wcout << L' ';
+		
+	        for (std::size_t j = 0; j < _chessBoardSize; ++j)
+	        {
+	            std::size_t cellIndex = cellRow * _chessBoardSize + j;
+			
+	            ColorChanger::SetTextColor(
+	                _cells[cellIndex]->GetPieceColor()
+	            );
+			
+	            _cells[cellIndex]->DrawCell(cellLine);
+	        }
+		
+	        ColorChanger::SetTextColor(Color::WHITE);
+		
+	        std::wcout << BP::ChessboardParts::RIGHT_BORDER << std::endl;
+	    }
 	}
 
-	std::wcout << ChessboardParts::BOTTOM_LEFT_CORNER;
-	std::wcout << std::wstring(totalWidth, ChessboardParts::HORIZONTAL_BOTTOM_BORDER);
-	std::wcout << ChessboardParts::BOTTOM_RIGHT_CORNER << std::flush;
+	std::wcout << BP::ChessboardParts::BOTTOM_LEFT_CORNER;
+	std::wcout << std::wstring(_totalWidth, BP::ChessboardParts::BOTTOM_BORDER);
+	std::wcout << BP::ChessboardParts::BOTTOM_RIGHT_CORNER << std::flush;
+	ColorChanger::ResetConsoleColor();
 }

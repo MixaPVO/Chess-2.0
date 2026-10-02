@@ -1,56 +1,40 @@
 #pragma once
 
-#include <windows.h>
+#include <iostream>
 
-namespace ColorsText
+struct RGB
 {
-    enum TextColor : WORD
-    {
-        BLACK = 0,
-        BLUE = FOREGROUND_BLUE,
-        GREEN = FOREGROUND_GREEN,
-        CYAN = FOREGROUND_GREEN | FOREGROUND_BLUE,
-        RED = FOREGROUND_RED,
-        MAGENTA = FOREGROUND_RED | FOREGROUND_BLUE,
-        YELLOW = FOREGROUND_RED | FOREGROUND_GREEN,
-        WHITE = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE,
-        GRAY = FOREGROUND_INTENSITY,
-        LIGHT_BLUE = FOREGROUND_BLUE | FOREGROUND_INTENSITY,
-        LIGHT_GREEN = FOREGROUND_GREEN | FOREGROUND_INTENSITY,
-        LIGHT_CYAN = FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY,
-        LIGHT_RED = FOREGROUND_RED | FOREGROUND_INTENSITY,
-        LIGHT_MAGENTA = FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY,
-        LIGHT_YELLOW = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY,
-    };
-}
-
-namespace ColorsBackground
-{
-    enum BackgroundColor : WORD
-    {
-        BLACK = 0,
-        BLUE = BACKGROUND_BLUE,
-        GREEN = BACKGROUND_GREEN,
-        CYAN = BACKGROUND_GREEN | BACKGROUND_BLUE,
-        RED = BACKGROUND_RED,
-        MAGENTA = BACKGROUND_RED | BACKGROUND_BLUE,
-        YELLOW = BACKGROUND_RED | BACKGROUND_GREEN,
-        WHITE = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE,
-        GRAY = BACKGROUND_INTENSITY,
-        LIGHT_BLUE = BACKGROUND_BLUE | BACKGROUND_INTENSITY,
-        LIGHT_GREEN = BACKGROUND_GREEN | BACKGROUND_INTENSITY,
-        LIGHT_CYAN = BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY,
-        LIGHT_RED = BACKGROUND_RED | BACKGROUND_INTENSITY,
-        LIGHT_MAGENTA = BACKGROUND_RED | BACKGROUND_BLUE | BACKGROUND_INTENSITY,
-        LIGHT_YELLOW = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_INTENSITY,
-    };
-}   
+    int r;
+    int g;
+    int b;
+};
 
 class ColorChanger
 {
 public:
-    static void SetConsoleColor(
-        WORD textColor = ColorsText::TextColor::WHITE, 
-        WORD backgroundColor = ColorsBackground::BackgroundColor::BLACK
-    );
+    static void SetTextColor(const RGB& Color);
+    static void SetBGColor(const RGB& Color);
+
+    static void ResetConsoleColor();
+
+    struct Color
+    {
+        static inline constexpr RGB BLACK = {0, 0, 0};
+        static inline constexpr RGB BLUE = {0, 0, 255};
+        static inline constexpr RGB GREEN = {0, 255, 0};
+        static inline constexpr RGB CYAN = {0, 255, 255};
+        static inline constexpr RGB RED = {255, 0, 0};
+        static inline constexpr RGB MAGENTA = {255, 0, 255};
+        static inline constexpr RGB YELLOW = {255, 255, 0};
+        static inline constexpr RGB WHITE = {255, 255, 255};
+        static inline constexpr RGB GRAY = {128, 128, 128};
+        static inline constexpr RGB LIGHT_BLUE = {173, 216, 230};
+        static inline constexpr RGB LIGHT_GREEN = {144, 238, 144};
+        static inline constexpr RGB LIGHT_CYAN = {224, 255, 255};
+        static inline constexpr RGB LIGHT_RED = {255, 182, 193};
+        static inline constexpr RGB LIGHT_MAGENTA = {255, 182, 255};
+        static inline constexpr RGB LIGHT_YELLOW = {255, 255, 182};
+    };
 };
+
+using Color = ColorChanger::Color;

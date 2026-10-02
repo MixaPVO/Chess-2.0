@@ -4,31 +4,33 @@
 #include <iostream>
 #include <memory>
 
-#include "FigureType.h"
-#include "CellboardParts.h"
+#include "PieceType.h"
+#include "BoardParts.h"
+#include "ConsoleColor.h"
 
 class Cell
 {
 public:
-    bool isFigureOnCell;
+    bool isPieceOnCell;
 
 private:
     std::vector<std::vector<wchar_t>> _cell;
-    std::unique_ptr<Figure> _figure;
-    int _positionX;
-    int _positionY;
+    ChessPiece* _piece;
 
 public:
-    static const int width = 5;
-    static const int height = 3;
+    static inline constexpr int WIDTH = 5;  
+    static inline constexpr int HEIGHT = 3;  
 
 public:
-    Cell(int positionX, int positionY, bool isFigureOnCell = false);
-    void DrawCell(int index);
-    void SetFigureOnCell(
-        PieceType type,
-        Fraction frac
+    Cell(
+        ChessPiece* _piece = nullptr, 
+        bool isPieceOnCell = false
     );
+    void DrawCell(int index);
+    void SetPieceOnCell(
+        ChessPiece* _piece
+    );
+    RGB GetPieceColor() const;
 
 private:
     void BuildCell();
