@@ -7,16 +7,22 @@
     <Filter Include="Headers">
       <UniqueIdentifier>{ece98aba-e7ac-4f69-bdd2-791fb2a24d57}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Other">
-      <UniqueIdentifier>{2b65f8be-e74b-4da7-b09e-2fbffc8dcc89}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scripts\main.cpp" />
-    <ClCompile Include="scripts\GameManagement.cpp">
+    <ClCompile Include="scripts\Cell.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
     <ClCompile Include="scripts\Chessboard.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="scripts\ChessPiece.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="scripts\ConsoleColor.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="scripts\GameManagement.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -30,8 +36,23 @@
     <ClInclude Include="scripts\Chessboard.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="scripts\ChessboardParts.h">
-      <Filter>Other</Filter>
+    <ClInclude Include="scripts\Rook.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="scripts\Pawn.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="scripts\ConsoleColor.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="scripts\ChessPiece.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="scripts\Cell.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="scripts\AllChessPieces.h">
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

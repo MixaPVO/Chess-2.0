@@ -2,7 +2,9 @@
 
 #include "AllChessPieces.h"
 
-Chessboard::Chessboard(int boardSize, bool isActive): _chessBoardSize{boardSize}, isActive{isActive}
+Chessboard::ChessboardParts::~ChessboardParts() = default;
+
+Chessboard::Chessboard(int boardSize, bool isActive): _chessBoardSize{boardSize}, _isActive{isActive}
 {
 	BuildChessboard();
 
@@ -12,7 +14,7 @@ Chessboard::Chessboard(int boardSize, bool isActive): _chessBoardSize{boardSize}
 
 void Chessboard::Update()
 {
-	if (isActive)
+	if (_isActive)
 	{
 		PrintChessboard();
 	}
@@ -27,9 +29,11 @@ void Chessboard::BuildChessboard()
 		const int rowOffset = i * _chessBoardSize;
 	    for (int j = 0; j < _chessBoardSize; ++j)
 	    {
-	        _cells[rowOffset+j] = std::make_unique<Cell>();
+	        _cells[rowOffset+j] = std::make_unique<Cell>(&ColorChanger::Color::WHITE);
 	    }
 	}
+	Pawn* p = new Pawn(true); 
+	_cells[0]->SetPieceOnCell(p);
 }
 
 void Chessboard::PrintChessboard() const

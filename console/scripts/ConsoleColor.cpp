@@ -1,5 +1,11 @@
 #include "ConsoleColor.h"
 
+ColorChanger::RGB::RGB(int r, int g, int b) : r{r}, g{g}, b{b}
+{
+}
+
+ColorChanger::Color::~Color() = default;
+
 void ColorChanger::SetTextColor(const RGB* color)
 {
     if (color != nullptr)

@@ -2,8 +2,8 @@
 
 ChessPiece::ChessPiece(
     bool isWhite, 
-    wchar_t type
-) : _type{type}, _isWhite{isWhite}, isAlive{true}
+    wchar_t character
+) : _isWhite{isWhite}, _character{character}
 {
     if (isWhite == true) 
     {
@@ -15,16 +15,14 @@ ChessPiece::ChessPiece(
     }
 }
 
-ChessPiece::~ChessPiece()
+ChessPiece::~ChessPiece() = default;
+
+wchar_t ChessPiece::GetCharacter() const
 {
+    return _character;
 }
 
-wchar_t ChessPiece::GetType() const
-{
-    return _type;
-}
-
-bool ChessPiece::GetisWhite() const
+bool ChessPiece::GetIsWhite() const
 {
     return _isWhite;
 }
@@ -42,7 +40,7 @@ void ChessPiece::SetPosition(int col, int row)
 
 void ChessPiece::DrawPiece() const
 {
-    ColorChanger::SetTextColor(GetColor());
-    std::wcout << L' ' << GetType() << L' ';
+    ColorChanger::SetTextColor(_figureColor);
+    std::wcout << L' ' << _character << L' ';
 }
 

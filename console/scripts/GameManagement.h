@@ -1,8 +1,8 @@
 #pragma once
 
+#include <conio.h>
 #include <iostream>
 #include <thread>
-#include <conio.h>
 
 #include "IUpdatable.h"
 #include "Chessboard.h"

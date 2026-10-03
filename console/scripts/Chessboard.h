@@ -1,18 +1,17 @@
 #pragma once
 
-#include <vector>
 #include <iostream>
-#include <string>
 #include <iterator>
+#include <string>
+#include <vector>
 
-#include "IUpdatable.h"
 #include "Cell.h"
+#include "IUpdatable.h"
 
 class Chessboard : public IUpdatable
 {
-public:
-	bool isActive;
 private:
+	bool _isActive;
 	std::vector<std::unique_ptr<Cell>> _cells;
 	int _chessBoardSize;
 
@@ -29,7 +28,7 @@ private:
 	void BuildChessboard();
 	void PrintChessboard() const;
 
-	struct ChessboardParts
+	struct ChessboardParts final
     {
         static inline constexpr wchar_t TOP_BORDER = L'\u2580';  
         static inline constexpr wchar_t BOTTOM_BORDER = L'\u2584';  
@@ -38,6 +37,8 @@ private:
         static inline constexpr wchar_t TOP_LEFT_CORNER = L'\u259B';  
         static inline constexpr wchar_t TOP_RIGHT_CORNER = L'\u259C';  
         static inline constexpr wchar_t BOTTOM_LEFT_CORNER = L'\u2599';  
-        static inline constexpr wchar_t BOTTOM_RIGHT_CORNER = L'\u259F'; 
+        static inline constexpr wchar_t BOTTOM_RIGHT_CORNER = L'\u259F';
+
+        virtual ~ChessboardParts() = 0;
     };
 };
