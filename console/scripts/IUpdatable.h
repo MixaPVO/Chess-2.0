@@ -1,5 +1,4 @@
-#ifndef IUPDATABLE_H
-#define IUPDATABLE_H
+#pragma once
 
 class IUpdatable
 {
@@ -7,5 +6,3 @@ public:
 	virtual ~IUpdatable() {}
 	virtual void Update() = 0;
 };
-
-#endif

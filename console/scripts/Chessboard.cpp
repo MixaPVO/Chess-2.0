@@ -1,38 +1,74 @@
 #include "Chessboard.h"
 
-Chessboard::Chessboard(int edgeLength, bool isActive): _edgeLength{edgeLength}, isActive{isActive}
+#include "AllChessPieces.h"
+
+Chessboard::ChessboardParts::~ChessboardParts() = default;
+
+Chessboard::Chessboard(int boardSize, bool isActive): _chessBoardSize{boardSize}, _isActive{isActive}
 {
-	BuildChessboard(edgeLength);
+	BuildChessboard();
+
+	_totalWidth = _chessBoardSize * (Cell::WIDTH+1) + 1;
+	_totalHeight = _chessBoardSize * Cell::HEIGHT;
 }
 
 void Chessboard::Update()
 {
-	if (isActive)
+	if (_isActive)
 	{
 		PrintChessboard();
 	}
 }
 
-void Chessboard::BuildChessboard(int edgeLength)
+void Chessboard::BuildChessboard()
 {
-	_chessboard.resize(edgeLength, std::vector<wchar_t>(edgeLength, ' '));
+	_cells.resize(_chessBoardSize*_chessBoardSize);
+
+	for (int i = 0; i < _chessBoardSize; ++i)
+	{
+		const int rowOffset = i * _chessBoardSize;
+	    for (int j = 0; j < _chessBoardSize; ++j)
+	    {
+	        _cells[rowOffset+j] = std::make_unique<Cell>(&ColorChanger::Color::WHITE);
+	    }
+	}
+	Pawn* p = new Pawn(true); 
+	_cells[0]->SetPieceOnCell(p);
 }
 
-
-void Chessboard::PrintChessboard()
+void Chessboard::PrintChessboard() const
 {
+	ColorChanger::SetTextColor(&Color::WHITE);
+	ColorChanger::SetBGColor(&Color::GRAY);
+
 	std::wcout << ChessboardParts::TOP_LEFT_CORNER;
-	std::wcout << std::wstring(_edgeLength, ChessboardParts::HORIZONTAL_BORDER);
+	std::wcout << std::wstring(_totalWidth, ChessboardParts::TOP_BORDER);
 	std::wcout << ChessboardParts::TOP_RIGHT_CORNER << std::endl;
 
-	for (std::size_t i = 0; i < _edgeLength; ++i)
+	for (std::size_t cellRow = 0; cellRow < _chessBoardSize; ++cellRow)
 	{
-		std::wcout << ChessboardParts::VERTICAL_BORDER;
-		std::copy(_chessboard[i].begin(), _chessboard[i].end(), std::ostream_iterator<wchar_t, wchar_t>(std::wcout));
-		std::wcout << ChessboardParts::VERTICAL_BORDER << std::endl;
-	}
+	    for (std::size_t cellLine = 0; cellLine < Cell::HEIGHT; ++cellLine)
+	    {
 
+	        std::wcout << ChessboardParts::LEFT_BORDER;
+	        std::wcout << L' ';
+
+			const std::size_t rowOffset = cellRow * _chessBoardSize;
+		
+	        for (std::size_t j = 0; j < _chessBoardSize; ++j)
+	        {
+	            std::size_t cellIndex = rowOffset + j;
+			
+	            _cells[cellIndex]->DrawCell(cellLine);
+	        }
+
+			ColorChanger::SetTextColor(&Color::WHITE);
+	        std::wcout << ChessboardParts::RIGHT_BORDER << std::endl;
+	    }
+	}
+	
 	std::wcout << ChessboardParts::BOTTOM_LEFT_CORNER;
-	std::wcout << std::wstring(_edgeLength, ChessboardParts::HORIZONTAL_BORDER);
+	std::wcout << std::wstring(_totalWidth, ChessboardParts::BOTTOM_BORDER);
 	std::wcout << ChessboardParts::BOTTOM_RIGHT_CORNER << std::flush;
+	ColorChanger::ResetConsoleColor();
 }

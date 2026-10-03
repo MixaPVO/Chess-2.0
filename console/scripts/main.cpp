@@ -6,7 +6,7 @@
 
 int main()
 {
-	 _setmode(_fileno(stdout), _O_U16TEXT);
+	_setmode(_fileno(stdout), _O_U16TEXT);
 
     GameManagement gameManagement;
     gameManagement.Update();

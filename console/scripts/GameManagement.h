@@ -1,9 +1,8 @@
-#ifndef GAME_MANAGEMENT_H
-#define GAME_MANAGEMENT_H
+#pragma once
 
+#include <conio.h>
 #include <iostream>
 #include <thread>
-#include <conio.h>
 
 #include "IUpdatable.h"
 #include "Chessboard.h"
@@ -25,5 +24,3 @@ private:
     void ClearConsole();
     void PickUpInput();
 };
-
-#endif

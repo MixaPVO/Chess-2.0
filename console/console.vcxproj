@@ -19,15 +19,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="scripts\Cell.cpp" />
     <ClCompile Include="scripts\Chessboard.cpp" />
+    <ClCompile Include="scripts\ChessPiece.cpp" />
+    <ClCompile Include="scripts\ConsoleColor.cpp" />
     <ClCompile Include="scripts\GameManagement.cpp" />
     <ClCompile Include="scripts\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="scripts\AllChessPieces.h" />
+    <ClInclude Include="scripts\Cell.h" />
     <ClInclude Include="scripts\Chessboard.h" />
-    <ClInclude Include="scripts\ChessboardParts.h" />
+    <ClInclude Include="scripts\ChessPiece.h" />
+    <ClInclude Include="scripts\ConsoleColor.h" />
     <ClInclude Include="scripts\GameManagement.h" />
     <ClInclude Include="scripts\IUpdatable.h" />
+    <ClInclude Include="scripts\Pawn.h" />
+    <ClInclude Include="scripts\Rook.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
