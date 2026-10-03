@@ -4,6 +4,9 @@ ColorChanger::RGB::RGB(int r, int g, int b) : r{r}, g{g}, b{b}
 {
 }
 
+ColorChanger::RGB::RGB(const RGB& other) = default;
+ColorChanger::RGB::RGB(RGB&& other) = default;
+
 ColorChanger::Color::~Color() = default;
 
 void ColorChanger::SetTextColor(const RGB* color)

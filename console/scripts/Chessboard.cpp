@@ -1,7 +1,5 @@
 #include "Chessboard.h"
 
-#include "AllChessPieces.h"
-
 Chessboard::ChessboardParts::~ChessboardParts() = default;
 
 Chessboard::Chessboard(int boardSize, bool isActive): _chessBoardSize{boardSize}, _isActive{isActive}
@@ -32,8 +30,6 @@ void Chessboard::BuildChessboard()
 	        _cells[rowOffset+j] = std::make_unique<Cell>(&ColorChanger::Color::WHITE);
 	    }
 	}
-	Pawn* p = new Pawn(true); 
-	_cells[0]->SetPieceOnCell(p);
 }
 
 void Chessboard::PrintChessboard() const

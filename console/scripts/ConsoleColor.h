@@ -16,6 +16,8 @@ public:
     private:
         friend struct Color;
         RGB(int r, int g, int b);
+        RGB(const RGB& other);
+        RGB(RGB&& other);
     };
     
     struct Color final
