@@ -1,61 +1,66 @@
 #include "Cell.h"
 
-Cell::Cell(ChessPiece* chessPiece, bool isPieceOnCell) : isPieceOnCell{isPieceOnCell}, _piece{chessPiece}
-{
-    BuildCell();
-}
-
-void Cell::BuildCell()
+Cell::Cell(const RGB* cellColor, bool isPieceOnCell) 
+    : _cellColor{cellColor}, 
+    isPieceOnCell{isPieceOnCell}
 {
 }
 
-void Cell::DrawCell(int line)
+
+void Cell::DrawCell(int line) const
 {
+    ColorChanger::SetTextColor(_cellColor);
     if (line == 0)
     {
-        std::wcout << BP::CellboardParts::TOP_LEFT_CORNER;
-        std::wcout << std::wstring(Cell::WIDTH - 2, BP::CellboardParts::HORIZONTAL_BORDER);
-        std::wcout << BP::CellboardParts::TOP_RIGHT_CORNER << L' ';
+        std::wcout << CellboardParts::TOP_LEFT_CORNER;
+        std::wcout << std::wstring(HORIZONTAL_WIDTH, CellboardParts::HORIZONTAL_BORDER);
+        std::wcout << CellboardParts::TOP_RIGHT_CORNER << L' ';
     }
     
-    else if (line == Cell::HEIGHT - 1)
+    else if (line == LAST_LINE)
     {
-        std::wcout << BP::CellboardParts::BOTTOM_LEFT_CORNER;
-        std::wcout << std::wstring(Cell::WIDTH - 2, BP::CellboardParts::HORIZONTAL_BORDER);
-        std::wcout << BP::CellboardParts::BOTTOM_RIGHT_CORNER << L' ';
+        std::wcout << CellboardParts::BOTTOM_LEFT_CORNER;
+        std::wcout << std::wstring(HORIZONTAL_WIDTH, CellboardParts::HORIZONTAL_BORDER);
+        std::wcout << CellboardParts::BOTTOM_RIGHT_CORNER << L' ';
     }
     else
     {
-        std::wcout << BP::CellboardParts::VERTICAL_BORDER;
+        std::wcout << CellboardParts::VERTICAL_BORDER;
         
-        if (this->isPieceOnCell) 
+        if (isPieceOnCell) 
         {
-            std::wcout << L' ' << _piece->getType() << L' ';
+            _piece->DrawPiece();
+            ColorChanger::SetTextColor(_cellColor);
         }
         else
             std::wcout << L' ' << L' ' << L' ';
 
-        std::wcout << BP::CellboardParts::VERTICAL_BORDER << L' ';
+        std::wcout << CellboardParts::VERTICAL_BORDER << L' ';
     }
     std::wcout << std::flush;
 }
 
 void Cell::SetPieceOnCell(
-    ChessPiece* fig
+    ChessPiece* piece
 ) 
 {
-    _piece = fig;
+    _piece = piece;
     isPieceOnCell = true;
 }
 
-RGB Cell::GetPieceColor() const
+const RGB* Cell::GetPieceColor() const
 {
-    if (isPieceOnCell && _piece != nullptr)
+    if (isPieceOnCell)
     {
-        return _piece->getColor();
+        return _piece->GetColor();
     }
     else
     {
-        return Color::WHITE;
+        return nullptr;
     }
+}
+
+const RGB* Cell::GetCellColor() const
+{
+    return _cellColor;
 }

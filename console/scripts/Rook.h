@@ -5,7 +5,7 @@
 class Rook : public ChessPiece
 {
 public:
-    Rook(bool fraction)
-    : ChessPiece(true, L'R', fraction)
+    Rook(bool isWhite)
+    : ChessPiece(isWhite, L'R')
     {}
 };

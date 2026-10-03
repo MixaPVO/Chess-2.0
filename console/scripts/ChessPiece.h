@@ -2,27 +2,32 @@
 
 #include "ConsoleColor.h"
 
+using Color = ColorChanger::Color;
+using RGB = ColorChanger::RGB;
+
 class ChessPiece
 {
-public: 
+private:
     bool isAlive;
 
 protected:
-    RGB _figureColor;
+    const RGB* _figureColor;
     wchar_t _type;
-    bool _fraction;
-    int _positionX;
-    int _positionY;
+    bool _isWhite;
+    int _positionCol;
+    int _positionRow;
     
 public:
     ChessPiece(
-        bool isAlive, 
-        wchar_t _type,
-        bool _fraction
+        bool _isWhite,
+        wchar_t _type
     );
+
+    virtual ~ChessPiece() = 0;
     
-    wchar_t getType() const;
-    bool getFraction() const;
-    RGB getColor() const;
-    void setPosition(int x, int y);
+    wchar_t GetType() const;
+    bool GetisWhite() const;
+    const RGB* GetColor() const;
+    void SetPosition(int col, int row);
+    void DrawPiece() const;
 };

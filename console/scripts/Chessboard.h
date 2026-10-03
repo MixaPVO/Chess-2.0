@@ -6,7 +6,6 @@
 #include <iterator>
 
 #include "IUpdatable.h"
-#include "BoardParts.h"
 #include "Cell.h"
 
 class Chessboard : public IUpdatable
@@ -29,4 +28,16 @@ public:
 private: 
 	void BuildChessboard();
 	void PrintChessboard() const;
+
+	struct ChessboardParts
+    {
+        static inline constexpr wchar_t TOP_BORDER = L'\u2580';  
+        static inline constexpr wchar_t BOTTOM_BORDER = L'\u2584';  
+        static inline constexpr wchar_t RIGHT_BORDER = L'\u2590';  
+        static inline constexpr wchar_t LEFT_BORDER = L'\u258C';  
+        static inline constexpr wchar_t TOP_LEFT_CORNER = L'\u259B';  
+        static inline constexpr wchar_t TOP_RIGHT_CORNER = L'\u259C';  
+        static inline constexpr wchar_t BOTTOM_LEFT_CORNER = L'\u2599';  
+        static inline constexpr wchar_t BOTTOM_RIGHT_CORNER = L'\u259F'; 
+    };
 };

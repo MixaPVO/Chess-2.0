@@ -1,42 +1,48 @@
 #include "ChessPiece.h"
 
 ChessPiece::ChessPiece(
-    bool isAlive, 
-    wchar_t type, 
-    bool fraction
-) : isAlive{isAlive}
+    bool isWhite, 
+    wchar_t type
+) : _type{type}, _isWhite{isWhite}, isAlive{true}
 {
-    _type = type;
-    _fraction = fraction;
-    
-    if (fraction == 0) 
+    if (isWhite == true) 
     {
-        _figureColor = Color::WHITE;
+        _figureColor = &Color::WHITE;
     }
     else 
     {
-        _figureColor = Color::BLACK;
+        _figureColor = &Color::BLACK;
     }
 }
 
-wchar_t ChessPiece::getType() const
+ChessPiece::~ChessPiece()
+{
+}
+
+wchar_t ChessPiece::GetType() const
 {
     return _type;
 }
 
-bool ChessPiece::getFraction() const
+bool ChessPiece::GetisWhite() const
 {
-    return _fraction;
+    return _isWhite;
 }
 
-RGB ChessPiece::getColor() const
+const RGB* ChessPiece::GetColor() const
 {
     return _figureColor;
 }
 
-void ChessPiece::setPosition(int x, int y)
+void ChessPiece::SetPosition(int col, int row)
 {
-    _positionX = x;
-    _positionY = y;
+    _positionCol = col;
+    _positionRow = row;
+}
+
+void ChessPiece::DrawPiece() const
+{
+    ColorChanger::SetTextColor(GetColor());
+    std::wcout << L' ' << GetType() << L' ';
 }
 

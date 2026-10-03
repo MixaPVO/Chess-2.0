@@ -4,34 +4,47 @@
 #include <iostream>
 #include <memory>
 
-#include "AllChessPieces.h"
-#include "BoardParts.h"
+#include "ChessPiece.h"
 #include "ConsoleColor.h"
+
+using Color = ColorChanger::Color;
+using RGB = ColorChanger::RGB;
 
 class Cell
 {
-public:
-    bool isPieceOnCell;
-
 private:
-    std::vector<std::vector<wchar_t>> _cell;
-    ChessPiece* _piece;
+    bool isPieceOnCell;
+    ChessPiece* _piece = nullptr;
+    const RGB* _cellColor;
 
 public:
     static inline constexpr int WIDTH = 5;  
-    static inline constexpr int HEIGHT = 3;  
+    static inline constexpr int HEIGHT = 3;
+
+private:
+    static inline constexpr int LAST_LINE = HEIGHT - 1;
+    static inline constexpr int HORIZONTAL_WIDTH = WIDTH - 2;
 
 public:
     Cell(
-        ChessPiece* _piece = nullptr, 
+        const RGB* _cellColor = &Color::WHITE,
         bool isPieceOnCell = false
     );
-    void DrawCell(int index);
+    void DrawCell(int index) const;
     void SetPieceOnCell(
         ChessPiece* _piece
     );
-    RGB GetPieceColor() const;
+    const RGB* GetPieceColor() const;
+    const RGB* GetCellColor() const;
 
 private:
-    void BuildCell();
+    struct CellboardParts 
+    {
+        static inline constexpr wchar_t HORIZONTAL_BORDER = L'\u2500';
+        static inline constexpr wchar_t VERTICAL_BORDER = L'\u2502';
+        static inline constexpr wchar_t TOP_LEFT_CORNER = L'\u250C';
+        static inline constexpr wchar_t TOP_RIGHT_CORNER = L'\u2510';
+        static inline constexpr wchar_t BOTTOM_LEFT_CORNER = L'\u2514';
+        static inline constexpr wchar_t BOTTOM_RIGHT_CORNER = L'\u2518';
+    };
 };

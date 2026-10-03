@@ -5,7 +5,7 @@
 class Pawn : public ChessPiece
 {
 public:
-    Pawn(bool fraction) 
-    : ChessPiece(true, L'P', fraction)
+    Pawn(bool isWhite) 
+    : ChessPiece(isWhite, L'P')
     {}
 };
