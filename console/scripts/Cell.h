@@ -13,9 +13,9 @@ using RGB = ColorChanger::RGB;
 class Cell
 {
 private:
-    bool isPieceOnCell;
+    bool isPieceOnCell = false;
     ChessPiece* _piece = nullptr;
-    const RGB* _cellColor;
+    const RGB* _cellColor = &Color::WHITE;
 
 public:
     static inline constexpr int WIDTH = 5;  
@@ -26,9 +26,10 @@ private:
     static inline constexpr int HORIZONTAL_WIDTH = WIDTH - 2;
 
 public:
+    Cell() = default;
     Cell(
-        const RGB* _cellColor = &Color::WHITE,
-        bool isPieceOnCell = false
+        const RGB* _cellColor,
+        bool isPieceOnCell
     );
     void DrawCell(int index) const;
     void SetPieceOnCell(
