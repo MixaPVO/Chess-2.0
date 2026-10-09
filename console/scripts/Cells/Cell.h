@@ -13,8 +13,7 @@ using RGB = Console::RGB;
 class Cell
 {
 private:
-    bool _isPieceOnCell = false;
-    ChessPiece* _piece = nullptr;
+    std::weak_ptr<ChessPiece> _piece;
     const RGB* _cellColor = nullptr;
 
 public:
@@ -30,11 +29,11 @@ public:
     Cell(const RGB* cellColor);
     Cell(
         const RGB* cellColor,
-        ChessPiece* piece
+        std::weak_ptr<ChessPiece> piece
     );
     void DrawCell(int index) const;
     void SetPieceOnCell(
-        ChessPiece* piece
+        std::weak_ptr<ChessPiece> piece
     );
     const RGB* GetPieceColor() const;
     const RGB* GetCellColor() const;

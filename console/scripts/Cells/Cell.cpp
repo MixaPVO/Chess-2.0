@@ -8,7 +8,7 @@ Cell::Cell(const RGB* cellColor) : _cellColor{cellColor}
 {
 }
 
-Cell::Cell(const RGB* cellColor, ChessPiece* piece) : Cell(cellColor) 
+Cell::Cell(const RGB* cellColor, std::weak_ptr<ChessPiece> piece) : Cell(cellColor) 
 {
     SetPieceOnCell(piece);
 }
@@ -34,9 +34,10 @@ void Cell::DrawCell(int line) const
     {
         std::wcout << CellboardParts::VERTICAL_BORDER;
         
-        if (_isPieceOnCell) 
+        auto piece = _piece.lock();
+        if (piece != nullptr) 
         {
-            _piece->DrawPiece();
+            piece->DrawPiece();
             Console::SetTextColor(_cellColor);
         }
         else
@@ -47,18 +48,18 @@ void Cell::DrawCell(int line) const
 }
 
 void Cell::SetPieceOnCell(
-    ChessPiece* piece
+    std::weak_ptr<ChessPiece> piece
 ) 
 {
     _piece = piece;
-    _isPieceOnCell = true;
 }
 
 const RGB* Cell::GetPieceColor() const
 {
-    if (_isPieceOnCell)
+    auto piece = _piece.lock();
+    if ( piece != nullptr)
     {
-        return _piece->GetColor();
+        return piece->GetColor();
     }
     else
     {
