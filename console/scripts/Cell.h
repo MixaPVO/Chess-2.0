@@ -5,10 +5,10 @@
 #include <vector>
 
 #include "ChessPiece.h"
-#include "ConsoleColor.h"
+#include "Console.h"
 
-using Color = ColorChanger::Color;
-using RGB = ColorChanger::RGB;
+using Color = Console::Color;
+using RGB = Console::RGB;
 
 class Cell
 {

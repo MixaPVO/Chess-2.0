@@ -16,7 +16,7 @@ Cell::Cell(const RGB* cellColor, ChessPiece* piece) : Cell(cellColor)
 
 void Cell::DrawCell(int line) const
 {
-    ColorChanger::SetTextColor(_cellColor);
+    Console::SetTextColor(_cellColor);
     if (line == 0)
     {
         std::wcout << CellboardParts::TOP_LEFT_CORNER;
@@ -37,14 +37,13 @@ void Cell::DrawCell(int line) const
         if (_isPieceOnCell) 
         {
             _piece->DrawPiece();
-            ColorChanger::SetTextColor(_cellColor);
+            Console::SetTextColor(_cellColor);
         }
         else
             std::wcout << L' ' << L' ' << L' ';
 
         std::wcout << CellboardParts::VERTICAL_BORDER << L' ';
     }
-    std::wcout << std::flush;
 }
 
 void Cell::SetPieceOnCell(
