@@ -8,7 +8,7 @@
 int main()
 {
 	if (_setmode(_fileno(stdout), _O_U16TEXT) == -1)
-        throw new std::runtime_error("_O_U16TEXT mode didn't set.");
+        throw std::runtime_error("_O_U16TEXT mode didn't set.");
 
     GameManagement& gameManagement = GameManagement::GetGameManagement();
     gameManagement.Update();
