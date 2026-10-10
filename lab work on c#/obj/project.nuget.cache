@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LHODhK8pSv4=",
+  "dgSpecHash": "0aNQru9Pqeo=",
   "success": true,
-  "projectFilePath": "D:\\PersonalFiles\\Works\\3 семестр\\Курсовая\\code-review\\lab work on c#\\ChessApp.csproj",
+  "projectFilePath": "D:\\Links\\code-review\\lab work on c#\\ChessApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MixaPVO\\.nuget\\packages\\microsoft.net.illink.tasks\\10.0.12\\microsoft.net.illink.tasks.10.0.12.nupkg.sha512",
     "C:\\Users\\MixaPVO\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\10.0.12\\microsoft.netcore.app.runtime.win-x64.10.0.12.nupkg.sha512",

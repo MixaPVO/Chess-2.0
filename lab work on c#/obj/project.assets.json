@@ -81,11 +81,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\PersonalFiles\\Works\\3 семестр\\Курсовая\\code-review\\lab work on c#\\ChessApp.csproj",
+      "projectUniqueName": "D:\\Links\\code-review\\lab work on c#\\ChessApp.csproj",
       "projectName": "ChessApp",
-      "projectPath": "D:\\PersonalFiles\\Works\\3 семестр\\Курсовая\\code-review\\lab work on c#\\ChessApp.csproj",
+      "projectPath": "D:\\Links\\code-review\\lab work on c#\\ChessApp.csproj",
       "packagesPath": "C:\\Users\\MixaPVO\\.nuget\\packages\\",
-      "outputPath": "D:\\PersonalFiles\\Works\\3 семестр\\Курсовая\\code-review\\lab work on c#\\obj\\",
+      "outputPath": "D:\\Links\\code-review\\lab work on c#\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\MixaPVO\\AppData\\Roaming\\NuGet\\NuGet.Config",

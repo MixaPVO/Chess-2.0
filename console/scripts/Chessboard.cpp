@@ -11,18 +11,21 @@ Chessboard::~Chessboard()
     std::wcout << L"Chessboard was destroyed" << std::endl;
 }
 
-std::vector<ChessPiece*>& Chessboard::GetWhiteChessPieces()
+std::vector<std::weak_ptr<ChessPiece>> Chessboard::GetWhiteChessPieces()
 {
     return _whiteChessPieces;
 }
 
-std::vector<ChessPiece*>& Chessboard::GetBlackChessPieces()
+std::vector<std::weak_ptr<ChessPiece>> Chessboard::GetBlackChessPieces()
 {
     return _blackChessPieces;
 }
 
-void Chessboard::AddChessPiece(ChessPiece* newChessPiece)
+void Chessboard::AddChessPiece(std::weak_ptr<ChessPiece> weakNewChessPiece)
 {
+    auto newChessPiece = weakNewChessPiece.lock();
+    if (newChessPiece == nullptr)
+        return;
     bool isWhitePiece = newChessPiece->GetIsWhitePiece();
     int chessPieceValue = newChessPiece->GetChessPieceValue();
     int& curChessPiecesValue = isWhitePiece? _whiteChessPiecesValue : _blackChessPiecesValue;
@@ -36,52 +39,69 @@ void Chessboard::AddChessPiece(ChessPiece* newChessPiece)
     curChessPiecesValue += chessPieceValue;
 
     int pieceIndex;
-    std::vector<ChessPiece*>& curChessPieces = isWhitePiece ? _whiteChessPieces : _blackChessPieces;
-    int curChessPieceVectorSize = curChessPieces.size();
+    std::vector<std::weak_ptr<ChessPiece>>& weakCurChessPieces = isWhitePiece ? _whiteChessPieces : _blackChessPieces;
+    int curChessPiecesVectorSize = weakCurChessPieces.size();
 
     if (isWhitePiece)
-        pieceIndex = curChessPieceVectorSize == 0 ? 0 : curChessPieces[curChessPieceVectorSize - 1]->GetIndexInChessboard() + 1;
+        pieceIndex = curChessPiecesVectorSize == 0 ? 0 : weakCurChessPieces[curChessPiecesVectorSize - 1].lock()->GetIndexInChessboard() + 1;
     else
-        pieceIndex = curChessPieceVectorSize == 0 ? _wcharChessboard.size() - 1 : curChessPieces[curChessPieceVectorSize - 1]->GetIndexInChessboard() - 1;
+        pieceIndex = curChessPiecesVectorSize == 0 ? _wcharChessboard.size() - 1 : weakCurChessPieces[curChessPiecesVectorSize - 1].lock()->GetIndexInChessboard() - 1;
 
-    if (pieceIndex < 0 || pieceIndex > _wcharChessboard.size() || _wcharChessboard[pieceIndex] != ' ')
+    if (pieceIndex < 0 || pieceIndex >= _wcharChessboard.size() || _wcharChessboard[pieceIndex] != ' ')
     {
         std::wcout<< newChessPiece->GetWcharChessPiece() << " piece is superfluous, _isWhitePeace = " << isWhitePiece << std::endl;
         return;
     }
 
     newChessPiece->SetIndexInChessboard(pieceIndex);
-    curChessPieces.push_back(newChessPiece);
+    weakCurChessPieces.push_back(weakNewChessPiece);
     _wcharChessboard[pieceIndex] = newChessPiece->GetWcharChessPiece();
 }
 
-void Chessboard::RemoveChessPiece(ChessPiece* removingChessPiece)
+void Chessboard::RemoveChessPiece(std::weak_ptr<ChessPiece> weakRemovingChessPiece)
 {
-    bool isWhitePiece = removingChessPiece->GetIsWhitePiece();
-    std::vector<ChessPiece*>& curChessPieces = isWhitePiece ? _whiteChessPieces : _blackChessPieces;
-    std::vector<ChessPiece*>::iterator necessaryPiece = std::find(curChessPieces.begin(), curChessPieces.end(), removingChessPiece);
+    auto removingChessPiece = weakRemovingChessPiece.lock();
+    if (removingChessPiece == nullptr)
+        return;
 
-    if (necessaryPiece == curChessPieces.end())
+    bool isWhitePiece = removingChessPiece->GetIsWhitePiece();
+    std::vector<std::weak_ptr<ChessPiece>>& weakCurChessPieces = isWhitePiece ? _whiteChessPieces : _blackChessPieces;
+    std::vector<std::weak_ptr<ChessPiece>>::iterator weakNecessaryPiece = std::find_if(
+        weakCurChessPieces.begin(), 
+        weakCurChessPieces.end(), 
+        [&weakRemovingChessPiece](const std::weak_ptr<ChessPiece>& item){
+            return weakRemovingChessPiece.lock() == item.lock();
+        });
+
+    if (weakNecessaryPiece == weakCurChessPieces.end())
     {
         std::wcout << "That piece doesn't exist on the chessboard" << std::endl;
         return;
     }
 
-    int i = (*necessaryPiece)->GetIndexInChessboard();
+    auto necessaryPiece = (*weakNecessaryPiece).lock();
+    if (necessaryPiece == nullptr)
+        throw std::runtime_error("An empty pointer in the vector.");
+    int i = necessaryPiece->GetIndexInChessboard();
 
     if (isWhitePiece)
     {
-        for (auto it = necessaryPiece; it < curChessPieces.end(); ++i, ++it)
+        for (auto it = weakNecessaryPiece; it < weakCurChessPieces.end(); ++i, ++it)
             _wcharChessboard[i] = _wcharChessboard[i + 1];
     }
     else
-        for (auto it = necessaryPiece; it < curChessPieces.end(); --i, ++it)
+        for (auto it = weakNecessaryPiece; it < weakCurChessPieces.end(); --i, ++it)
             _wcharChessboard[i] = _wcharChessboard[i - 1];
     _wcharChessboard[i] = ' ';
     
 
-    std::vector<ChessPiece*>::iterator newEnd = std::remove(curChessPieces.begin(), curChessPieces.end(), removingChessPiece);
-    curChessPieces.erase(newEnd, curChessPieces.end());
+    std::vector<std::weak_ptr<ChessPiece>>::iterator newEnd = std::remove_if(
+        weakCurChessPieces.begin(), 
+        weakCurChessPieces.end(), 
+        [&weakRemovingChessPiece] (const std::weak_ptr<ChessPiece>& item){
+            return weakRemovingChessPiece.lock() == item.lock(); 
+        });
+    weakCurChessPieces.erase(newEnd, weakCurChessPieces.end());
 }
 
 void Chessboard::Update()

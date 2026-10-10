@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <iostream>
 #include <iterator>
+#include <memory>
+#include <stdexcept>
 #include <vector>
 #include "ChessPiece.h"
 
@@ -24,17 +26,17 @@ private:
     int _whiteChessPiecesValue = 0;
     int _blackChessPiecesValue = 0;
 
-    std::vector<ChessPiece*> _whiteChessPieces;
-    std::vector<ChessPiece*> _blackChessPieces;
+    std::vector<std::weak_ptr<ChessPiece>> _whiteChessPieces;
+    std::vector<std::weak_ptr<ChessPiece>> _blackChessPieces;
     std::vector<wchar_t> _wcharChessboard;
 
 public:
     Chessboard(int edgeLength, int maxChessPiecesValue);
     ~Chessboard();
-    std::vector<ChessPiece*>& GetWhiteChessPieces();
-    std::vector<ChessPiece*>& GetBlackChessPieces();
-    void AddChessPiece(ChessPiece* newChessPiece);
-    void RemoveChessPiece(ChessPiece* removingChessPiece);
+    std::vector<std::weak_ptr<ChessPiece>> GetWhiteChessPieces();
+    std::vector<std::weak_ptr<ChessPiece>> GetBlackChessPieces();
+    void AddChessPiece(std::weak_ptr<ChessPiece> ChessPiece);
+    void RemoveChessPiece(std::weak_ptr<ChessPiece> removingChessPiece);
     void Update();
 private:
     void PrintChessboard() const;
