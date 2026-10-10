@@ -40,4 +40,5 @@ public:
     void Update();
 private:
     void PrintChessboard() const;
+    std::shared_ptr<ChessPiece> GetRealPointerOfChessPiece(std::weak_ptr<ChessPiece> weakChessPiece) const;
 };
